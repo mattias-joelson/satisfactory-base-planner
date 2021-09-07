@@ -131,11 +131,105 @@ public class SatisfactoryBasePlanner {
         Map<Item, Integer> usageCount = getUsageCount(depthMap);
         printUsageCount(usageCount);
         System.out.println();
+
+        // reduce
+//        depthMap = depthMap.entrySet().stream()
+//                .filter(entry -> entry.getKey() instanceof Component)
+//                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+//        printDepthMap(depthMap);
+//        itemLayers = getItemLayers(depthMap);
+//        System.out.println();
+//        height = itemLayers.size();
+//        width = itemLayers.stream().mapToInt(Set::size).max().orElse(0);
+//        System.out.println(String.format("height: %d, width: %d", height, width));
+//        fact = fact(width);
+//        System.out.println(String.format("row combinations: %d, total combinations: %f", fact, Math.pow(fact, height)));
+//
+//        List<Integer> layerCombinations = new ArrayList<>(itemLayers.size());
+//        double totalCombinations = 1;
+//        for (Set<Item> itemLayer : itemLayers) {
+//            int n = itemLayer.size();
+//            int combinations = fact(width);
+//            if (n < width) {
+//                int empty = width - n;
+//                if (empty > 1) {
+//                    int emptyCombinations = fact(empty);
+//                    combinations /= emptyCombinations;
+//                }
+//            }
+//            totalCombinations *= combinations;
+//            layerCombinations.add(combinations);
+//        }
+//        System.out.println(String.format("total combinations: %f, combinations per layer: %s", totalCombinations, layerCombinations));
+//        for (double d = 0; d < totalCombinations; d += 1) {
+//
+//        }
+//        System.out.println("done");
+/*
+1
+
+1 2
+2 1
+
+1 2 3
+1 3 2
+2 1 3
+2 3 1
+3 1 2
+3 2 1
+
+1 2 3 4
+1 2 4 3
+1 3 2 4
+1 3 4 2
+1 4 2 3
+1 4 3 2
+2 1 3 4
+2 1 4 3
+2 3 1 4
+2 3 4 1
+2 4 1 3
+2 4 3 1
+3 1 2 4
+3 1 4 2
+3 2 1 4
+3 2 4 1
+3 4 1 2
+3 4 2 1
+4 1 2 3
+4 1 3 2
+4 2 1 3
+4 2 3 1
+4 3 1 2
+4 3 2 1
+
+
+ */
+        //layout
+//        Item[][] layout = new Item[height][width];
+//        for (int row = 0; row < itemLayers.size(); row += 1) {
+//            List<Item> layer = List.copyOf(itemLayers.get(row));
+//            for (int column = 0; column < layer.size(); column += 1) {
+//                layout[row][column] = layer.get(column);
+//            }
+//        }
+//        for (int row = 0; row < layout.length; row += 1) {
+//            for (int column = 0; column < layout[row].length; column += 1) {
+//                Item item = layout[row][column];
+//                if (item != null) {
+//                    System.out.println(String.format("%" + (column * 4 + 1) + "s%s <- %s", "", item.getName(), item.getRecipe().asString()));
+//                }
+//            }
+//        }
     }
 
     private static int fact(int n) {
         return (n <= 1) ? 1 : n * fact(n -1);
     }
+
+//    private static int pow(int base, int exponent) {
+//        return (exponent <= 1) ? base : base * pow(base, exponent - 1);
+//    }
 
     private static Map<Item, Integer> getDepthMap(Item[] items) {
         Map<Item, Integer> depthMap = new HashMap<>();
@@ -181,6 +275,13 @@ public class SatisfactoryBasePlanner {
             usageCount.put(ingredient, usageCount.get(ingredient) + 1);
         }
     }
+
+//    private static Recipe getRecipe(Item item) {
+//        if (item.getRecipe() != null) {
+//            return item.getRecipe();
+//        }
+//        return new Recipe(item);
+//    }
 
     private static void addItem(Map<Item, Integer> depthMap, Item item, int currDepth) {
         if (item instanceof Component && ((Component) item).isLocal()) {
